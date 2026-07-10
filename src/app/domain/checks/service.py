@@ -1,5 +1,6 @@
 from app.common.enums import CheckStatus, DocumentType, IssueLevel, ProgramType
 from app.domain.checks.constants import REQUIRED_DOCUMENTS
+from app.domain.checks.schemas import IssueSchema
 
 
 def determine_final_status(issues: list[dict]) -> CheckStatus:
@@ -47,7 +48,7 @@ def check_document_completeness(
     return issues
 
 
-def create_unknown_document_warning(filename: str) -> dict:
+def create_unknown_document_warning(filename: str) -> IssueSchema:
     """
     Создать warning для нераспознанного имени файла.
     
@@ -55,9 +56,9 @@ def create_unknown_document_warning(filename: str) -> dict:
         filename: Имя файла
     
     Returns:
-        dict: Проблема уровня warning
+        IssueSchema: Проблема уровня warning
     """
-    return {
-        "level": IssueLevel.WARNING,
-        "message": f"Не удалось определить тип документа: «{filename}»",
-    }
+    return IssueSchema(
+        level=IssueLevel.WARNING,
+        message=f"Не удалось определить тип документа: «{filename}»",
+    )
