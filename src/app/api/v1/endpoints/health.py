@@ -6,7 +6,7 @@ router = APIRouter()
 
 @router.get("/health", summary="Health check", description="Проверка работоспособности API")
 async def health_check():
-    """Health check endpoint for Docker и мониторинга."""
+    """Health check endpoint for Docker и мониторинга"""
     return JSONResponse(
         content={
             "status": "ok",

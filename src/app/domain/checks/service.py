@@ -5,7 +5,7 @@ from app.domain.checks.schemas import IssueSchema
 
 def determine_final_status(issues: list[dict]) -> CheckStatus:
     """
-    Определить итоговый статус проверки на основе списка проблем.
+    Определить итоговый статус проверки на основе списка проблем
     
     Args:
         issues: Список проблем вида [{"level": "error", "message": "..."}, ...]
@@ -26,7 +26,7 @@ def check_document_completeness(
     program: ProgramType,
 ) -> list[dict]:
     """
-    Проверить комплектность пакета документов.
+    Проверить комплектность пакета документов
     
     Args:
         detected_types: Набор обнаруженных типов документов
@@ -50,7 +50,7 @@ def check_document_completeness(
 
 def create_unknown_document_warning(filename: str) -> IssueSchema:
     """
-    Создать warning для нераспознанного имени файла.
+    Создать warning для нераспознанного имени файла
     
     Args:
         filename: Имя файла

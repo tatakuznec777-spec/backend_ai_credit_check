@@ -34,7 +34,7 @@ settings = get_settings()
 
 
 def get_status_label(status: str) -> str:
-    """Возвращает человекочитаемый статус."""
+    """Возвращает читаемый статус"""
     labels = {
         "approved": "Все документы в порядке",
         "rejected": "Нельзя заявлять в банк",
@@ -47,7 +47,7 @@ def get_status_label(status: str) -> str:
 async def get_checks(
     session: AsyncSession = Depends(get_db_session),
 ):
-    """Получить список всех проверок."""
+    """Получить список всех проверок"""
     try:
         # Используем repository функцию с eager loading
         checks = await list_checks(session)
@@ -75,7 +75,7 @@ async def get_check(
     check_id: uuid.UUID,
     session: AsyncSession = Depends(get_db_session),
 ):
-    """Получить полную информацию о проверке по ID."""
+    """Получить полную информацию о проверке по ID"""
     check = await get_check_by_id(session, check_id)
     if not check:
         raise HTTPException(status_code=404, detail="Проверка не найдена")
@@ -102,7 +102,7 @@ async def create_check_endpoint(
     files: List[UploadFile] = File(..., description="Файлы документов"),
     session: AsyncSession = Depends(get_db_session),
 ):
-    """Загрузить пакет документов для проверки."""
+    """Загрузить пакет документов для проверки"""
     try:
         # Валидация program
         try:

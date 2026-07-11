@@ -8,20 +8,20 @@ from app.common.enums import DocumentType, IssueLevel, ProgramType
 
 
 class IssueSchema(BaseModel):
-    """Схема проблемы (ошибка или предупреждение)."""
+    """Схема проблемы (ошибка или предупреждение)"""
     level: IssueLevel
     message: str
 
 
 class DocumentSchema(BaseModel):
-    """Схема документа в ответе."""
+    """Схема документа в ответе"""
     name: str = Field(..., description="Имя файла")
     detected_type: Optional[str] = Field(None, description="Определённый тип документа")
     size_kb: int = Field(..., description="Размер файла в КБ")
 
 
 class ExtractedDataSchema(BaseModel):
-    """Схема извлечённых данных из документов."""
+    """Схема извлечённых данных из документов"""
     contractor: Optional[str] = Field(None, description="Контрагент")
     amount: Optional[str] = Field(None, description="Сумма")
     date: Optional[str] = Field(None, description="Дата")
@@ -29,7 +29,7 @@ class ExtractedDataSchema(BaseModel):
 
 
 class CheckResponse(BaseModel):
-    """Полный ответ по проверке (POST /api/checks и GET /api/checks/{id})."""
+    """Полный ответ по проверке (POST /api/checks и GET /api/checks/{id})"""
     check_id: uuid.UUID
     status: str
     status_label: str
@@ -46,7 +46,7 @@ class CheckResponse(BaseModel):
                 "check_id": "abc123e4-5678-90ab-cdef-ghijklmnopqr",
                 "status": "rejected",
                 "status_label": "Нельзя заявлять в банк",
-                "reason": "Отсутствует спецификация к договору.",
+                "reason": "Отсутствует спецификация к договору",
                 "issues": [
                     {"level": "error", "message": "Отсутствует обязательный документ: спецификация"},
                     {"level": "warning", "message": "Не удалось определить тип документа: «scan_0041.jpg»"}
@@ -67,7 +67,7 @@ class CheckResponse(BaseModel):
 
 
 class CheckListItem(BaseModel):
-    """Краткая информация о проверке для списка (GET /api/checks)."""
+    """Краткая информация о проверке для списка (GET /api/checks)"""
     id: uuid.UUID
     created_at: datetime
     program: ProgramType
@@ -78,12 +78,12 @@ class CheckListItem(BaseModel):
 
 
 class ChecksListResponse(BaseModel):
-    """Ответ со списком проверок."""
+    """Ответ со списком проверок"""
     checks: list[CheckListItem]
     total: int
 
 
 # Схемы для валидации входящих данных (если понадобятся)
 class CheckCreateRequest(BaseModel):
-    """Запрос на создание проверки (для future использования)."""
+    """Запрос на создание проверки (для future использования)"""
     program: ProgramType

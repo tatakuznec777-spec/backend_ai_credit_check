@@ -36,8 +36,8 @@ DOCUMENT_PATTERNS: dict[DocumentType, list[str]] = {
 
 def get_pattern_for_type(doc_type: DocumentType) -> re.Pattern:
     """
-    Скомпилировать regex-паттерн для типа документа.
-    Объединяет все паттерны через | (OR).
+    Скомпилировать regex-паттерн для типа документа
+    Объединяет все паттерны через | (OR)
     """
     patterns = DOCUMENT_PATTERNS.get(doc_type, [])
     combined = "|".join(patterns)

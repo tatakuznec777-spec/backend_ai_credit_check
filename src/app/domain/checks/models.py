@@ -9,7 +9,7 @@ from app.infrastructure.database import Base
 
 
 class Check(Base):
-    """Модель проверки пакета документов."""
+    """Модель проверки пакета документов"""
     
     __tablename__ = "checks"
 
@@ -38,7 +38,7 @@ class Check(Base):
 
 
 class Document(Base):
-    """Модель документа в проверке."""
+    """Модель документа в проверке"""
     
     __tablename__ = "documents"
 

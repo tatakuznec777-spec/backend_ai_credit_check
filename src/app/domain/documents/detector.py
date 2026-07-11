@@ -14,7 +14,7 @@ DETECTION_ORDER = [
 
 def detect_document_type(filename: str) -> DocumentType:
     """
-    Определить тип документа по имени файла.
+    Определить тип документа по имени файла
     
     Args:
         filename: Имя файла (например, "договор_поставки_2025.pdf")
@@ -39,7 +39,7 @@ def detect_document_type(filename: str) -> DocumentType:
 
 def is_valid_extension(filename: str, allowed_extensions: set[str]) -> bool:
     """
-    Проверить, что расширение файла допустимо.
+    Проверить, что расширение файла допустимо
     
     Args:
         filename: Имя файла

@@ -25,14 +25,14 @@ async_session_factory = async_sessionmaker(
 
 
 class Base(DeclarativeBase):
-    """Базовый класс для всех SQLAlchemy моделей."""
+    """Базовый класс для всех SQLAlchemy моделей"""
     pass
 
 
 async def get_db_session():
     """
-    FastAPI dependency для получения сессии БД.
-    Автоматически коммитит или откатывает транзакцию.
+    FastAPI dependency для получения сессии БД
+    Автоматически коммитит или откатывает транзакцию
     """
     async with async_session_factory() as session:
         try:

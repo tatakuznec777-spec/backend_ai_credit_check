@@ -8,21 +8,21 @@ from app.common.enums import CheckStatus, DocumentType, IssueLevel, ProgramType
 
 
 class TestDetermineFinalStatus:
-    """Тесты определения итогового статуса."""
+    """Тесты определения итогового статуса"""
     
     def test_approved_when_no_issues(self):
         """Нет проблем -> approved."""
         assert determine_final_status([]) == CheckStatus.APPROVED
     
     def test_approved_when_only_warnings(self):
-        """Только warnings -> approved."""
+        """Только warnings -> approved"""
         issues = [
             {"level": IssueLevel.WARNING, "message": "test warning"},
         ]
         assert determine_final_status(issues) == CheckStatus.APPROVED
     
     def test_rejected_when_has_error(self):
-        """Хотя бы одна ошибка -> rejected."""
+        """Хотя бы одна ошибка -> rejected"""
         issues = [
             {"level": IssueLevel.WARNING, "message": "warning"},
             {"level": IssueLevel.ERROR, "message": "error"},
@@ -30,7 +30,7 @@ class TestDetermineFinalStatus:
         assert determine_final_status(issues) == CheckStatus.REJECTED
     
     def test_rejected_when_multiple_errors(self):
-        """Несколько ошибок -> rejected."""
+        """Несколько ошибок -> rejected"""
         issues = [
             {"level": IssueLevel.ERROR, "message": "error 1"},
             {"level": IssueLevel.ERROR, "message": "error 2"},
@@ -39,10 +39,10 @@ class TestDetermineFinalStatus:
 
 
 class TestCheckDocumentCompleteness:
-    """Тесты проверки комплектности документов."""
+    """Тесты проверки комплектности документов"""
     
     def test_federal_complete(self):
-        """Federal: все документы есть."""
+        """Federal: все документы есть"""
         detected = {
             DocumentType.CONTRACT,
             DocumentType.SPECIFICATION,
@@ -53,7 +53,7 @@ class TestCheckDocumentCompleteness:
         assert len(issues) == 0
     
     def test_federal_missing_specification(self):
-        """Federal: не хватает спецификации."""
+        """Federal: не хватает спецификации"""
         detected = {
             DocumentType.CONTRACT,
             DocumentType.INVOICE,
@@ -64,7 +64,7 @@ class TestCheckDocumentCompleteness:
         assert "specification" in issues[0]["message"]
     
     def test_regional_complete(self):
-        """Regional: все документы есть."""
+        """Regional: все документы есть"""
         detected = {
             DocumentType.CONTRACT,
             DocumentType.INVOICE,
@@ -74,7 +74,7 @@ class TestCheckDocumentCompleteness:
         assert len(issues) == 0
     
     def test_regional_missing_act(self):
-        """Regional: не хватает акта."""
+        """Regional: не хватает акта"""
         detected = {
             DocumentType.CONTRACT,
             DocumentType.INVOICE,
@@ -85,10 +85,17 @@ class TestCheckDocumentCompleteness:
 
 
 class TestCreateUnknownDocumentWarning:
-    """Тесты создания warning для нераспознанных файлов."""
+    """Тесты создания warning для нераспознанных файлов"""
     
     def test_warning_message_format(self):
-        """Проверка формата сообщения."""
+        """Проверка формата сообщения"""
         warning = create_unknown_document_warning("scan_0041.jpg")
-        assert warning["level"] == IssueLevel.WARNING
-        assert "scan_0041.jpg" in warning["message"]
+        # IssueSchema — это Pydantic модель, обращаемся через атрибуты
+        assert warning.level == IssueLevel.WARNING
+        assert "scan_0041.jpg" in warning.message
+    
+    def test_warning_is_issue_schema(self):
+        """Проверка, что возвращается IssueSchema"""
+        from app.domain.checks.schemas import IssueSchema
+        warning = create_unknown_document_warning("test.pdf")
+        assert isinstance(warning, IssueSchema)

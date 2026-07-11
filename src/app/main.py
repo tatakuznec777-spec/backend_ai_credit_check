@@ -9,12 +9,12 @@ from app.core.config import get_settings
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Lifespan context manager для startup/shutdown событий.
+    Lifespan context manager для startup/shutdown событий
     """
-    print("🚀 Starting Document Checker API...")
+    print("Starting Document Checker API...")
     # Здесь можно инициализировать пул БД, кеш и т.д.
     yield
-    print("🛑 Shutting down Document Checker API...")
+    print("Shutting down Document Checker API...")
     # Cleanup при остановке
 
 
@@ -35,7 +35,7 @@ app.include_router(api_v1_router, prefix=settings.api_v1_prefix)
 
 @app.get("/")
 async def root():
-    """Root endpoint с информацией об API."""
+    """Root endpoint с информацией об API"""
     return {
         "message": "Document Checker API",
         "docs": "/docs" if settings.debug else "Disabled in production",

@@ -14,7 +14,7 @@ async def create_check(
     extracted_data: dict | None = None,
     documents: list[dict] | None = None,
 ) -> Check:
-    """Создать новую проверку с документами."""
+    """Создать новую проверку с документами"""
     check = Check(
         program=program,
         status=status,
@@ -39,7 +39,7 @@ async def create_check(
 
 
 async def get_check_by_id(session: AsyncSession, check_id: uuid.UUID) -> Check | None:
-    """Получить проверку по ID с документами."""
+    """Получить проверку по ID с документами"""
     result = await session.execute(
         select(Check)
         .options(selectinload(Check.documents))
@@ -53,7 +53,7 @@ async def list_checks(
     limit: int = 100,
     offset: int = 0,
 ) -> list[Check]:
-    """Получить список всех проверок с документами (eager loading)."""
+    """Получить список всех проверок с документами (eager loading)"""
     result = await session.execute(
         select(Check)
         .options(selectinload(Check.documents))  # ← ДОБАВЛЕНО: явная загрузка документов
